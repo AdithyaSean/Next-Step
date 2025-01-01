@@ -1,0 +1,19 @@
+[submodule "next-step-users"]
+    path = next-step-users
+    url = https://github.com/AdithyaSean/next-step-users.git
+
+[submodule "next-step-recommendations"]
+    path = next-step-recommendations
+    url = https://github.com/AdithyaSean/next-step-recommendations.git
+
+[submodule "next-step-gateway"]
+    path = next-step-gateway
+    url = https://github.com/AdithyaSean/next-step-gateway.git
+
+[submodule "next-step-academic"]
+    path = next-step-academic
+    url = https://github.com/AdithyaSean/next-step-academic.git
+
+[submodule "next-step-frontend"]
+    path = next-step-frontend
+    url = https://github.com/AdithyaSean/next-step-frontend.git
