@@ -1,184 +1,178 @@
 # Next Step 🎓
 
-An AI-powered educational and career pathway recommendation system that helps students make informed decisions about their academic and career paths. Built with React frontend and planned Spring Boot microservices backend.
+An AI-powered educational and career pathway recommendation system that helps students make informed decisions about their academic and career paths. Built with React frontend and Spring Boot microservices backend.
 
-## 🌟 Current Features [Alpha]
+## 🌟 System Architecture
 
-- **Basic Authentication**:
-  - Google authentication via Firebase
-  - Basic login/logout functionality
+### Authentication & Security
+- Firebase Authentication for secure user management
+- JWT token validation across microservices
+- Role-based access control
+- API Gateway for centralized security
 
-- **Navigation**:
-  - Basic routing setup
-  - Responsive navigation bar
+### Service Communication
+- REST APIs for synchronous requests
+- Event-driven architecture for asynchronous operations
+- Service discovery via Spring Cloud Netflix
+- Circuit breakers for fault tolerance
 
-## 🚀 Planned Features
+## 🚀 Microservices
 
-- **Career Path Recommendation**:
-  - Personalized career path recommendations
-  - Success probability calculations
-  - Real-time AI-powered insights
+The project follows a microservices architecture with the following components:
 
-- **Student Profile Management**:
-  - Academic performance tracking
-  - Skills and interests input
-  - Goals and preferences settings
+### Core Services
+1. **API Gateway** (`next-step-gateway`)
+   - Route management
+   - Authentication validation
+   - Rate limiting
+   - Load balancing
 
-- **Educational Institution Data**:
-  - University field exploration
-  - Course compatibility matching
-  - Institution information
+2. **User Service** (`next-step-users`)
+   - Firebase authentication integration
+   - User profile management
+   - Role-based authorization
+   - User preferences
 
-## 🏗️ Project Structure
+3. **Academic Service** (`next-step-academic`)
+   - Educational institution data
+   - Course management
+   - Academic performance tracking
+   - Stream recommendations
 
+4. **Recommendation Engine** (`next-step-recommendations`)
+   - AI/ML models for career prediction
+   - Skills analysis
+   - Course compatibility
+   - Success probability calculation
+
+5. **Frontend** (`next-step-frontend`)
+   - React-based UI
+   - Material-UI components
+   - Responsive design
+   - Progressive Web App
+
+### Service Dependencies
+```mermaid
+graph TD
+    A[Frontend] --> B[API Gateway]
+    B --> C[User Service]
+    B --> D[Academic Service]
+    B --> E[Recommendation Engine]
+    D --> C
+    E --> C
+    E --> D
 ```
-.
-├── src/
-│   ├── components/     # Reusable UI components
-│   ├── pages/         # Page components
-│   ├── services/      # API and external service integrations
-│   ├── context/       # React context providers
-│   └── utils/         # Helper functions and utilities
-├── docs/             # Project documentation
-│   ├── architecture.md
-│   ├── data-model.md
-│   ├── microservices.md
-│   └── roadmap.md
-└── public/           # Static assets
-```
-
-## 🌐 Microservices
-
-The project is divided into the following microservices:
-
-- [Next Step Users](https://github.com/AdithyaSean/next-step-users/tree/main) - User management and authentication service
-- [Next Step Recommendations](https://github.com/AdithyaSean/next-step-recommendations/tree/main) - AI-powered recommendation engine
-- [Next Step Gateway](https://github.com/AdithyaSean/next-step-gateway/tree/main) - API Gateway and request routing
-- [Next Step Academic](https://github.com/AdithyaSean/next-step-academic/tree/main) - Academic data and course management
-- [Next Step Frontend](https://github.com/AdithyaSean/next-step-frontend/tree/main) - React-based user interface
-
-Each microservice is maintained in its own repository and integrated into the main project as a Git submodule. Click the links above to view the latest code for each service.
 
 ## 🛠️ Tech Stack
 
-- **Frontend**:
-  - React + Vite
-  - Firebase Authentication
-  - React Router
-  - CSS Modules
+### Frontend
+- React + Vite
+- Firebase Authentication
+- React Router
+- Material-UI
+- Progressive Web App
 
-- **Planned Backend**:
-  - Spring Boot Microservices
-  - PostgreSQL
-  - Spring Security
-  - Spring Cloud
+### Backend
+- Spring Boot
+- Spring Cloud
+- PostgreSQL
+- Redis Cache
+- Firebase Admin SDK
+
+### DevOps
+- Docker
+- Kubernetes
+- GitHub Actions
+- ELK Stack
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 - Node.js (v18+)
-- Yarn
-- Git
-- Firebase Project (for authentication)
-- Backend API running (for predictions)
+- Java 17
+- Docker & Docker Compose
+- Firebase Project
+- PostgreSQL
 
 ### Local Development Setup
 
-1. **Clone the repository with all microservices**:
+1. **Clone with submodules**:
    ```bash
-   # Clone the main repository and all microservices
    git clone --recursive https://github.com/AdithyaSean/Next-Step.git
    cd Next-Step
-
-   # If you already cloned without --recursive, run:
-   git submodule update --init --recursive
    ```
 
-2. **Install dependencies**:
+2. **Environment Setup**:
    ```bash
+   # Copy example env files
+   cp .env.example .env
+   cd next-step-frontend && cp .env.example .env
+   ```
+
+3. **Firebase Setup**:
+   - Create a Firebase project
+   - Enable Authentication
+   - Download service account key
+   - Place in appropriate service directories
+
+4. **Start Services**:
+   ```bash
+   # Start infrastructure
+   docker-compose up -d
+
+   # Start backend services
+   ./mvnw spring-boot:run -pl next-step-gateway
+   ./mvnw spring-boot:run -pl next-step-users
+   ./mvnw spring-boot:run -pl next-step-academic
+   ./mvnw spring-boot:run -pl next-step-recommendations
+
+   # Start frontend
+   cd next-step-frontend
    yarn install
-   ```
-
-3. **Environment Setup**:
-   - Copy `.env.example` to `.env`
-   - Fill in your environment variables:
-     ```bash
-     cp .env.example .env
-     ```
-   Required variables:
-   - `VITE_API_URL`: Your backend API URL
-   - Firebase configuration (from Firebase Console):
-     - `VITE_FIREBASE_API_KEY`
-     - `VITE_FIREBASE_AUTH_DOMAIN`
-     - `VITE_FIREBASE_PROJECT_ID`
-     - `VITE_FIREBASE_STORAGE_BUCKET`
-     - `VITE_FIREBASE_MESSAGING_SENDER_ID`
-     - `VITE_FIREBASE_APP_ID`
-
-4. **Start development server**:
-   ```bash
    yarn dev
    ```
 
-### Firebase Setup
+## 📊 Monitoring & Logging
 
-1. Create a new Firebase project at [Firebase Console](https://console.firebase.google.com)
-2. Enable Authentication:
-   - Go to Authentication > Sign-in method
-   - Enable Google provider
-3. Enable Firestore:
-   - Go to Firestore Database
-   - Create database in production mode
-   - Set up Firestore rules:
-     ```javascript
-     rules_version = '2';
-     service cloud.firestore {
-       match /databases/{database}/documents {
-         match /profiles/{userId} {
-           allow read, write: if request.auth != null && request.auth.uid == userId;
-         }
-       }
-     }
-     ```
-4. Get your Firebase configuration:
-   - Go to Project Settings > General
-   - Scroll down to "Your apps"
-   - Click the web icon (</>)
-   - Register your app
-   - Copy the configuration to your `.env` file
+- ELK Stack for centralized logging
+- Prometheus & Grafana for metrics
+- Jaeger for distributed tracing
+- Spring Actuator for health checks
 
-## 🧪 Testing
+## 🔄 CI/CD Pipeline
 
-```bash
-# Run unit tests
-yarn test
+1. **Build & Test**:
+   - Unit tests
+   - Integration tests
+   - Code coverage
+   - Static analysis
 
-# Run e2e tests
-yarn test:e2e
-```
+2. **Security**:
+   - SAST scanning
+   - Dependency checking
+   - Docker image scanning
 
-## 📚 Documentation
+3. **Deployment**:
+   - Environment promotion
+   - Blue-green deployment
+   - Automated rollbacks
+   - Health checks
 
+## 📝 Documentation
+
+Detailed documentation available in `/docs`:
 - [Architecture Overview](docs/architecture.md)
-- [Development Roadmap](docs/roadmap.md)
 - [Data Models](docs/data-model.md)
-- [Microservices Design](docs/microservices.md)
+- [Microservices](docs/microservices.md)
+- [Development Roadmap](docs/roadmap.md)
 
 ## 🤝 Contributing
 
 1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
+2. Create feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit changes (`git commit -m 'Add AmazingFeature'`)
+4. Push to branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
-
-## 📝 Development Status
-
-- **Frontend**: Alpha stage - Basic authentication and navigation implemented
-- **Backend**: Planning phase - Architecture and data models designed
-- **AI Models**: Core models developed, integration pending
-
-For detailed progress and upcoming features, see our [roadmap](docs/roadmap.md).
 
 ## 📄 License
 
