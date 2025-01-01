@@ -47,6 +47,18 @@ An AI-powered educational and career pathway recommendation system that helps st
 └── public/           # Static assets
 ```
 
+## 🌐 Microservices
+
+The project is divided into the following microservices:
+
+- [Next Step Users](https://github.com/AdithyaSean/next-step-users/tree/main) - User management and authentication service
+- [Next Step Recommendations](https://github.com/AdithyaSean/next-step-recommendations/tree/main) - AI-powered recommendation engine
+- [Next Step Gateway](https://github.com/AdithyaSean/next-step-gateway/tree/main) - API Gateway and request routing
+- [Next Step Academic](https://github.com/AdithyaSean/next-step-academic/tree/main) - Academic data and course management
+- [Next Step Frontend](https://github.com/AdithyaSean/next-step-frontend/tree/main) - React-based user interface
+
+Each microservice is maintained in its own repository and integrated into the main project as a Git submodule. Click the links above to view the latest code for each service.
+
 ## 🛠️ Tech Stack
 
 - **Frontend**:
