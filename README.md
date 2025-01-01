@@ -84,10 +84,14 @@ Each microservice is maintained in its own repository and integrated into the ma
 
 ### Local Development Setup
 
-1. **Clone the repository**:
+1. **Clone the repository with all microservices**:
    ```bash
-   git clone https://github.com/adithyasean/Next-Step-Frontend.git
-   cd Next-Step-Frontend
+   # Clone the main repository and all microservices
+   git clone --recursive https://github.com/AdithyaSean/Next-Step.git
+   cd Next-Step
+
+   # If you already cloned without --recursive, run:
+   git submodule update --init --recursive
    ```
 
 2. **Install dependencies**:
