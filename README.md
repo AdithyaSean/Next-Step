@@ -132,32 +132,6 @@ graph TD
    yarn dev
    ```
 
-## 📊 Monitoring & Logging
-
-- ELK Stack for centralized logging
-- Prometheus & Grafana for metrics
-- Jaeger for distributed tracing
-- Spring Actuator for health checks
-
-## 🔄 CI/CD Pipeline
-
-1. **Build & Test**:
-   - Unit tests
-   - Integration tests
-   - Code coverage
-   - Static analysis
-
-2. **Security**:
-   - SAST scanning
-   - Dependency checking
-   - Docker image scanning
-
-3. **Deployment**:
-   - Environment promotion
-   - Blue-green deployment
-   - Automated rollbacks
-   - Health checks
-
 ## 📝 Documentation
 
 Detailed documentation available in `/docs`:
