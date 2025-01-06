@@ -76,14 +76,11 @@ graph TD
 - Spring Boot
 - Spring Cloud
 - PostgreSQL
-- Redis Cache
 - Firebase Admin SDK
 
 ### DevOps
 - Docker
 - Kubernetes
-- GitHub Actions
-- ELK Stack
 
 ## 🚀 Getting Started
 
