@@ -1,0 +1,160 @@
+@startuml Next Step Class Diagram
+
+' Style configurations
+skinparam classAttributeIconSize 0
+skinparam monochrome true
+skinparam shadowing false
+skinparam linetype ortho
+
+' Base User class
+abstract class User {
+    -UUID id
+    -String name
+    -String email
+    -String password
+    -String role
+    +UUID getId()
+    +String getName()
+    +String getEmail()
+    +String getRole()
+}
+
+' Student entity
+class Student {
+    -String contact
+    -String school
+    -String district
+    -String stream
+    -Double zScore
+    -Map<String, String> olResults
+    -Map<String, String> alResults
+    -String university
+    -String course
+    -Double gpa
+    -List<String> interests
+    -List<String> skills
+    -List<String> strengths
+    -List<CareerPrediction> predictions
+    +Map<String, String> getOLResults()
+    +Map<String, String> getALResults()
+    +Double getZScore()
+    +List<CareerPrediction> getPredictions()
+}
+
+' Institution entity
+class Institution {
+    -String type
+    -String website
+    -String location
+    -Map<String, String> contactInfo
+    -List<Course> courses
+    +List<Course> getCourses()
+    +String getType()
+    +Map<String, String> getContactInfo()
+}
+
+' Stream entity
+class Stream {
+    -UUID id
+    -String name
+    -String description
+    -List<String> requiredOLSubjects
+    -Map<String, String> minimumOLGrades
+    -List<Course> possibleCourses
+    -List<String> relatedCareers
+    +List<Course> getPossibleCourses()
+    +Map<String, String> getMinimumGrades()
+}
+
+' Course entity
+class Course {
+    -UUID id
+    -String name
+    -String description
+    -String duration
+    -Map<String, String> minimumALGrades
+    -Double minimumZScore
+    -List<Institution> offeredBy
+    -List<String> relatedCareers
+    +Double getMinimumZScore()
+    +List<Institution> getOfferedBy()
+}
+
+' Career entity
+class Career {
+    -String code
+    -String title
+    -String description
+    -String category
+    -List<String> requiredSkills
+    -List<String> relatedCourses
+    -Map<String, String> externalLinks
+    +String getCode()
+    +List<String> getRequiredSkills()
+}
+
+' CareerPrediction value object
+class CareerPrediction <<ValueObject>> {
+    -String careerPath
+    -Double probability
+    -LocalDateTime predictedAt
+    +Double getProbability()
+    +LocalDateTime getPredictedAt()
+}
+
+' CourseRecommendation entity
+class CourseRecommendation {
+    -UUID id
+    -UUID studentId
+    -UUID courseId
+    -Double matchScore
+    -Map<String, Object> factors
+    -LocalDateTime createdAt
+    +Double getMatchScore()
+    +Map<String, Object> getFactors()
+}
+
+' StudentResults entity
+class StudentResults {
+    -UUID studentId
+    -String examType
+    -Map<String, String> results
+    -LocalDateTime examDate
+    +Map<String, String> getResults()
+    +String getExamType()
+}
+
+' Relationships
+User <|-- Student
+User <|-- Institution
+Student "1" *-- "many" CareerPrediction
+Student "1" *-- "many" StudentResults
+Student "many" -- "1" Institution : studies at >
+Institution "many" -- "many" Course : offers >
+Stream "1" -- "many" Course : contains >
+Course "many" -- "many" Career : leads to >
+Student "1" -- "many" CourseRecommendation
+Course "1" -- "many" CourseRecommendation
+
+' Notes
+note right of User
+  Base class for all user types
+  with authentication details
+end note
+
+note right of Student
+  Extends User with academic
+  and personal information
+end note
+
+note bottom of Career
+  Represents possible career paths
+  with required skills and courses
+end note
+
+note bottom of CourseRecommendation
+  Generated recommendations
+  based on student profile
+end note
+
+@enduml
