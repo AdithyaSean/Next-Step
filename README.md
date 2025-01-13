@@ -101,6 +101,17 @@ graph TD
    cd Next-Step
    ```
 
+   If you've already cloned the project without submodules:
+   ```bash
+   git submodule init
+   git submodule update
+   ```
+
+   To update all submodules to their latest commits:
+   ```bash
+   git submodule update --remote --merge
+   ```
+
 2. **Environment Setup**:
    ```bash
    # Copy example env files

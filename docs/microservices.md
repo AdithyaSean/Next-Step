@@ -1,8 +1,19 @@
 ## Microservices for Next Step Project
 
-**Microservices:**
+**Core Services:**
 
-1. **User Management Service:**
+1. **API Gateway Service:**
+    - Central entry point for all client requests
+    - **Key Features:**
+        - Request routing
+        - Load balancing
+        - Authentication & authorization
+        - Rate limiting
+        - Request/response transformation
+        - Circuit breaking
+        - API documentation aggregation
+
+2. **User Management Service:**
     - Handles base user functionality and inheritance hierarchy
     - Manages both Student and Institution user types
     - **Key Features:**
@@ -12,7 +23,7 @@
         - Role-based access control
         - Profile relationships
 
-2. **Education Service:**
+3. **Education Service:**
     - Manages educational data (streams, courses, careers)
     - Provides course and career information
     - Handles educational path mapping
@@ -22,12 +33,18 @@
         - Career path data
         - Educational requirements
 
-3. **Recommendation Engine Service:**
+4. **Recommendation Engine Service:**
     - Core AI functionality, analyzes student data, retrieves relevant educational data and generates career path recommendations with probabilities.
     - This service can be a separate microservice consuming data from User Management, Student Profile, and Education Data services.
 
-4. **Frontend Service:**
+5. **Frontend Service:**
     - React application acts as the user interface, fetching data and displaying recommendations from various microservices through APIs.
+
+**Service Communication Flow:**
+- All external requests go through the API Gateway
+- Gateway handles authentication and routes to appropriate services
+- Inter-service communication can be direct for internal operations
+- Event-driven communication for asynchronous operations
 
 **Benefits of this approach:**
 - Simplified architecture with fewer services

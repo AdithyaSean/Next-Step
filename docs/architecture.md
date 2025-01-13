@@ -120,10 +120,21 @@ Next Step is built using a microservices architecture, with each service handlin
 
 ## System Integration
 
-### API Gateway
-- Routes requests to appropriate microservices
-- Handles authentication and authorization
-- Implements rate limiting and security measures
+## API Gateway Architecture
+
+### Gateway Service Details
+- **Technology**: Spring Cloud Gateway
+- **Features**:
+  - Centralized routing
+  - Security enforcement
+  - Rate limiting
+  - Circuit breaking
+  - Request/response transformation
+  - Service discovery integration
+  - Metrics collection
+  - API documentation aggregation
+
+### Gateway Configuration
 
 ### Inter-Service Communication
 - REST APIs for synchronous operations
