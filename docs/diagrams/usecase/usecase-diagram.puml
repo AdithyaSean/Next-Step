@@ -1,0 +1,117 @@
+@startuml Next Step Use Cases
+
+left to right direction
+
+' Style configurations
+skinparam actorStyle awesome
+skinparam packageStyle rectangle
+skinparam usecaseStyle roundbox
+skinparam shadowing false
+skinparam linetype polyline
+
+' Actors
+actor "User" as User
+actor "Student" as Student
+actor "Institution" as Institution
+actor "AI Engine" as AI #AliceBlue
+actor "Admin" as Administrator #AliceBlue
+
+' Inheritance relationships
+Student -up-|> User
+Institution -up-|> User
+
+' Main package
+package "Next Step System" {
+    ' Authentication package
+    package "Authentication" {
+        usecase "Register Account" as Register
+        usecase "Login" as Login
+        usecase "Manage Profile" as ManageProfile
+        usecase "Reset Password" as ResetPwd
+    }
+
+    ' Student Features package
+    package "Student Features" {
+        usecase "View Academic Profile" as ViewProfile
+        usecase "Update Academic Results" as UpdateResults
+        usecase "Set Preferences" as SetPreferences
+        usecase "View Career Recommendations" as ViewRecommendations
+        usecase "Explore Courses" as ExploreCourses
+        usecase "Track Progress" as TrackProgress
+        usecase "View Institution Details" as ViewInstitutions
+    }
+
+    ' Institution Features package
+    package "Institution Features" {
+        usecase "Manage Course Offerings" as ManageCourses
+        usecase "Update Institution Profile" as UpdateInstitution
+        usecase "View Student Applications" as ViewApplications
+        usecase "Manage Admissions" as ManageAdmissions
+    }
+
+    ' Admin Features package
+    package "Admin Features" {
+        usecase "Manage Users" as ManageUsers
+        usecase "Monitor System" as MonitorSystem
+        usecase "Manage Career Data" as ManageCareerData
+        usecase "Configure AI Engine" as ConfigureAI
+    }
+
+    ' AI Features package
+    package "AI Features" {
+        usecase "Generate Recommendations" as GenerateRecommendations
+        usecase "Analyze Student Data" as AnalyzeData
+        usecase "Calculate Success Probability" as CalculateProbability
+        usecase "Update Prediction Models" as UpdateModels
+    }
+}
+
+' Base user relationships
+User --> Register
+User --> Login
+User --> ManageProfile
+User --> ResetPwd
+
+' Student specific relationships
+Student --> ViewProfile
+Student --> UpdateResults
+Student --> SetPreferences
+Student --> ViewRecommendations
+Student --> ExploreCourses
+Student --> TrackProgress
+Student --> ViewInstitutions
+
+' Institution specific relationships
+Institution --> ManageCourses
+Institution --> UpdateInstitution
+Institution --> ViewApplications
+Institution --> ManageAdmissions
+
+' Supporting actors (right side)
+Administrator -left-> Login
+Administrator -left-> ManageUsers
+Administrator -left-> MonitorSystem
+Administrator -left-> ManageCareerData
+Administrator -left-> ConfigureAI
+
+AI -left-> GenerateRecommendations
+AI -left-> AnalyzeData
+AI -left-> CalculateProbability
+AI -left-> UpdateModels
+
+' Dependencies
+ViewRecommendations ..> GenerateRecommendations : includes
+GenerateRecommendations ..> AnalyzeData : includes
+GenerateRecommendations ..> CalculateProbability : includes
+ConfigureAI ..> UpdateModels : includes
+ExploreCourses ..> ViewInstitutions : includes
+ManageAdmissions ..> ViewApplications : includes
+
+' Notes
+note "All users must authenticate\nbefore accessing features" as N1
+Login .. N1
+
+note "AI continuously learns from\nuser interactions and outcomes" as N2
+UpdateModels .. N2
+
+@enduml
