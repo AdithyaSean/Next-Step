@@ -1,34 +1,40 @@
-## Dividing Microservices for Next Step Project
-
-Here's a breakdown of how we can divide our application into microservices following best practices:
+## Microservices for Next Step Project
 
 **Microservices:**
 
 1. **User Management Service:**
-    - Handles user registration, login, authentication, and authorization.
-    - This service can be independent with its own database for user data.
+    - Handles base user functionality and inheritance hierarchy
+    - Manages both Student and Institution user types
+    - **Key Features:**
+        - User authentication and authorization
+        - Student profile management (extends User)
+        - Institution management (extends User)
+        - Role-based access control
+        - Profile relationships
 
-2. **Student Profile Service:**
-    - Manages student profiles, including basic information, academic results, interests, skills, and career predictions.
-    - This service can access data from User Management and other relevant services.
+2. **Education Service:**
+    - Manages educational data (streams, courses, careers)
+    - Provides course and career information
+    - Handles educational path mapping
+    - **Key Features:**
+        - Course management
+        - Stream information
+        - Career path data
+        - Educational requirements
 
-3. **Education Data Service:**
-    - Provides information about universities, streams, courses, and careers.
-    - This service can have a separate database and APIs for fetching details. 
-
-4. **Recommendation Engine Service:**
+3. **Recommendation Engine Service:**
     - Core AI functionality, analyzes student data, retrieves relevant educational data and generates career path recommendations with probabilities.
     - This service can be a separate microservice consuming data from User Management, Student Profile, and Education Data services.
 
-5. **Frontend Service:**
+4. **Frontend Service:**
     - React application acts as the user interface, fetching data and displaying recommendations from various microservices through APIs.
 
 **Benefits of this approach:**
-
-* **Improved Scalability:** Each service can be scaled independently based on its load.
-* **Loose Coupling:** Services are loosely coupled, changes in one service don't affect others significantly.
-* **Faster Development:** Teams can work on different services concurrently.
-* **Technology Flexibility:** Different services can use different programming languages and databases.
+- Simplified architecture with fewer services
+- Better data consistency for user-related entities
+- Reduced inter-service communication
+- Clearer domain boundaries
+- Easier deployment and maintenance
 
 **Additional Considerations:**
 

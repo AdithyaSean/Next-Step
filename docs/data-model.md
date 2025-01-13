@@ -2,7 +2,7 @@
 
 ## Core Entities
 
-### 1. User
+### 1. User Management Models
 ```java
 @Entity
 @Table(name = "users")
@@ -14,7 +14,10 @@ public class User {
     private String name;
     private String email;
     private String password;
-    private String role;  // e.g., "student", "admin"
+    private String role;  // e.g., "student", "institution"
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Student studentProfile;
 }
 ```
 
@@ -22,10 +25,14 @@ public class User {
 ```java
 @Entity
 @Table(name = "students")
-public class Student {
+public class Student extends User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
+    @ManyToOne
+    @JoinColumn(name = "institution_id")
+    private Institution currentInstitution;
 
     // Basic Info
     private String contact;
@@ -149,15 +156,17 @@ public class Career {
 ```java
 @Entity
 @Table(name = "institutions")
-public class Institution {
+public class Institution extends User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    private String name;
     private String type;  // e.g., "University", "Institute"
     private String website;
     private String location;
+
+    @OneToMany(mappedBy = "currentInstitution")
+    private List<Student> students;
 
     @ManyToMany(mappedBy = "offeredBy")
     private List<Course> courses;

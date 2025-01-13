@@ -27,17 +27,19 @@ The project follows a microservices architecture with the following components:
    - Rate limiting
    - Load balancing
 
-2. **User Service** (`next-step-users`)
+2. **User Management Service** (`next-step-users`)
    - Firebase authentication integration
-   - User profile management
+   - Base user management with inheritance hierarchy
+   - Student profiles (extends User)
+   - Institution profiles (extends User)
    - Role-based authorization
-   - User preferences
+   - Academic records tracking
 
-3. **Academic Service** (`next-step-academic`)
-   - Educational institution data
+3. **Education Service** (`next-step-education`)
    - Course management
-   - Academic performance tracking
-   - Stream recommendations
+   - Stream management
+   - Career path data
+   - Educational recommendations
 
 4. **Recommendation Engine** (`next-step-recommendations`)
    - AI/ML models for career prediction
@@ -55,8 +57,8 @@ The project follows a microservices architecture with the following components:
 ```mermaid
 graph TD
     A[Frontend] --> B[API Gateway]
-    B --> C[User Service]
-    B --> D[Academic Service]
+    B --> C[User Management]
+    B --> D[Education Service]
     B --> E[Recommendation Engine]
     D --> C
     E --> C
@@ -120,7 +122,7 @@ graph TD
    # Start backend services
    ./mvnw spring-boot:run -pl next-step-gateway
    ./mvnw spring-boot:run -pl next-step-users
-   ./mvnw spring-boot:run -pl next-step-academic
+   ./mvnw spring-boot:run -pl next-step-education
    ./mvnw spring-boot:run -pl next-step-recommendations
 
    # Start frontend

@@ -7,33 +7,25 @@ Next Step is built using a microservices architecture, with each service handlin
 ## Microservices Architecture
 
 ### 1. User Management Service
-- **Responsibility**: Handles user authentication, authorization, and user data management
+- **Responsibility**: Handles user authentication, student profiles, institution management, and related data
 - **Key Entities**:
   ```java
   @Entity
+  @Inheritance(strategy = InheritanceType.JOINED)
   public class User {
       private UUID id;
       private String name;
       private String email;
       private String password;
-      private String role;
+      private String role;  // "student", "institution"
   }
-  ```
-- **Database**: Dedicated user database
-- **Key APIs**:
-  - User registration
-  - Authentication
-  - User profile management
 
-### 2. Student Profile Service
-- **Responsibility**: Manages comprehensive student data and academic profiles
-- **Key Entities**:
-  ```java
   @Entity
-  public class Student {
-      private UUID id;
+  public class Student extends User {
+      // Student specific fields
       private String contact;
       private String school;
+      // ...existing student fields...
       private String district;
       private Map<String, String> olResults;
       private Map<String, String> alResults;
@@ -47,16 +39,24 @@ Next Step is built using a microservices architecture, with each service handlin
       private List<String> strengths;
       private List<CareerPrediction> predictions;
   }
-  ```
-- **Database**: Student profile database
-- **Dependencies**: User Management Service
-- **Key APIs**:
-  - Student profile CRUD operations
-  - Academic results management
-  - Skills and interests updates
 
-### 3. Education Data Service
-- **Responsibility**: Manages educational institution and course data
+  @Entity
+  public class Institution extends User {
+      private String type;
+      private String website;
+      private List<Course> courses;
+      private Map<String, String> contactInfo;
+  }
+  ```
+- **Database**: Unified database for user, student, and institution data
+- **Key APIs**:
+  - User authentication and management
+  - Student profile operations
+  - Institution management
+  - Academic records tracking
+
+### 2. Education Service
+- **Responsibility**: Manages educational data and course information
 - **Key Entities**:
   ```java
   @Entity
@@ -81,15 +81,6 @@ Next Step is built using a microservices architecture, with each service handlin
   }
 
   @Entity
-  public class Institution {
-      private UUID id;
-      private String name;
-      private String type;
-      private String website;
-      private List<Course> courses;
-  }
-
-  @Entity
   public class Career {
       private String code;
       private String title;
@@ -104,7 +95,7 @@ Next Step is built using a microservices architecture, with each service handlin
   - Institution details
   - Career path data
 
-### 4. Recommendation Engine Service
+### 3. Recommendation Engine Service
 - **Responsibility**: Core AI functionality for career predictions
 - **Features**:
   - Student data analysis
@@ -118,7 +109,7 @@ Next Step is built using a microservices architecture, with each service handlin
   - Update prediction models
   - Fetch career insights
 
-### 5. Frontend Service
+### 4. Frontend Service
 - **Responsibility**: User interface and client-side logic
 - **Technology**: React application
 - **Features**:
