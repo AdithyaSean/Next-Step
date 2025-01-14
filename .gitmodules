@@ -1,3 +1,11 @@
+[submodule "next-step-flutter"]
+    path = next-step-flutter
+    url = https://github.com/AdithyaSean/next-step-flutter.git
+
+[submodule "next-step-ai"]
+    path = next-step-ai
+    url = https://github.com/AdithyaSean/next-step-ai.git
+
 [submodule "next-step-users"]
     path = next-step-users
     url = https://github.com/AdithyaSean/next-step-users.git
