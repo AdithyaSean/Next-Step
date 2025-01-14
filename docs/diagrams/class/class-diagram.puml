@@ -8,11 +8,11 @@ skinparam linetype ortho
 
 ' Base User class
 abstract class User {
-    -UUID id
-    -String name
-    -String email
-    -String password
-    -String role
+    #UUID id
+    #String name
+    #String email
+    #String password
+    #String role
     +UUID getId()
     +String getName()
     +String getEmail()
