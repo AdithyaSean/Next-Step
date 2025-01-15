@@ -1,0 +1,57 @@
+@startuml Institution Management Sequence
+
+skinparam ParticipantPadding 20
+skinparam BoxPadding 10
+skinparam SequenceGroupBodyBackgroundColor transparent
+
+actor Institution
+participant "Frontend" as UI
+participant InstitutionController
+participant ValidationService
+participant InstitutionService
+participant StorageService
+participant InstitutionRepository
+
+Institution -> UI: Update institution profile
+activate UI
+
+UI -> InstitutionController: PUT /institution/profile\n(profileData)
+activate InstitutionController
+
+InstitutionController -> ValidationService: validateInstitutionData(profileData)
+activate ValidationService
+
+alt invalid input
+    ValidationService --> InstitutionController: throw ValidationException
+    InstitutionController --> UI: 400 Bad Request
+    UI --> Institution: Show validation errors
+else valid input
+    ValidationService --> InstitutionController: success
+    
+    InstitutionController -> InstitutionService: updateProfile(profileData)
+    activate InstitutionService
+    
+    alt has new media
+        InstitutionService -> StorageService: uploadFiles(media)
+        activate StorageService
+        StorageService --> InstitutionService: fileUrls
+        deactivate StorageService
+    end
+    
+    InstitutionService -> InstitutionRepository: save(updatedProfile)
+    activate InstitutionRepository
+    InstitutionRepository --> InstitutionService: savedProfile
+    deactivate InstitutionRepository
+    
+    InstitutionService --> InstitutionController: institutionDTO
+    deactivate InstitutionService
+    
+    InstitutionController --> UI: 200 OK
+    UI --> Institution: Profile updated successfully
+end
+
+deactivate ValidationService
+deactivate InstitutionController
+deactivate UI
+
+@enduml 
