@@ -187,25 +187,6 @@ class CareerPrediction <<ValueObject>> {
     +boolean validateProbability(Double probability)
 }
 
-' StudentResults entity
-class StudentResults {
-    -UUID studentId
-    -String examType
-    -Results results
-    -LocalDateTime examDate
-    +Results getResults()
-    +String getExamType()
-}
-
-' Results aggregation
-class Results {
-    -Map<String, String> results
-    +void addResult(String subject, String grade)
-    +void removeResult(String subject)
-    +Map<String, String> getResults()
-    +boolean validateResults(Map<String, String> results)
-}
-
 ' Relationships
 User <|-- Student
 User <|-- Institution
@@ -213,7 +194,6 @@ Student "1" *-- "many" CareerPrediction
 Student "1" *-- "1" StudentProfile
 Student "1" *-- "1" OLResults
 Student "1" *-- "1" ALResults
-Student "1" *-- "many" StudentResults
 Student "many" -- "1" Institution : studies at >
 Institution "many" -- "many" Course : offers >
 Institution "1" *-- "1" ContactInfo
@@ -223,7 +203,6 @@ Course "1" *-- "1" RelatedCareers
 Career "1" *-- "1" RequiredSkills
 Career "1" *-- "1" RelatedCourses
 Career "1" *-- "1" ExternalLinks
-StudentResults "1" *-- "1" Results
 
 ' Notes
 note right of User
