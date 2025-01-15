@@ -17,6 +17,11 @@ abstract class User {
     +String getName()
     +String getEmail()
     +String getRole()
+    +void setName(String name)
+    +void setEmail(String email)
+    +void setPassword(String password)
+    +void setRole(String role)
+    +boolean validatePassword(String inputPassword)
 }
 
 ' Student entity
@@ -26,19 +31,50 @@ class Student {
     -String district
     -String stream
     -Double zScore
-    -Map<String, String> olResults
-    -Map<String, String> alResults
+    -OLResults olResults
+    -ALResults alResults
     -String university
     -String course
     -Double gpa
+    -StudentProfile profile
+    -List<CareerPrediction> predictions
+    +OLResults getOLResults()
+    +ALResults getALResults()
+    +Double getZScore()
+    +StudentProfile getProfile()
+    +List<CareerPrediction> getPredictions()
+    +void addPrediction(CareerPrediction prediction)
+}
+
+' StudentProfile aggregation
+class StudentProfile {
     -List<String> interests
     -List<String> skills
     -List<String> strengths
-    -List<CareerPrediction> predictions
-    +Map<String, String> getOLResults()
-    +Map<String, String> getALResults()
-    +Double getZScore()
-    +List<CareerPrediction> getPredictions()
+    +void addInterest(String interest)
+    +void addSkill(String skill)
+    +void addStrength(String strength)
+    +List<String> getInterests()
+    +List<String> getSkills()
+    +List<String> getStrengths()
+}
+
+' OLResults aggregation
+class OLResults {
+    -Map<String, String> results
+    +void addResult(String subject, String grade)
+    +void removeResult(String subject)
+    +Map<String, String> getResults()
+    +boolean validateResults(Map<String, String> results)
+}
+
+' ALResults aggregation
+class ALResults {
+    -Map<String, String> results
+    +void addResult(String subject, String grade)
+    +void removeResult(String subject)
+    +Map<String, String> getResults()
+    +boolean validateResults(Map<String, String> results)
 }
 
 ' Institution entity
@@ -46,24 +82,22 @@ class Institution {
     -String type
     -String website
     -String location
-    -Map<String, String> contactInfo
+    -ContactInfo contactInfo
     -List<Course> courses
     +List<Course> getCourses()
     +String getType()
-    +Map<String, String> getContactInfo()
+    +ContactInfo getContactInfo()
+    +void addCourse(Course course)
+    +void removeCourse(Course course)
 }
 
-' Stream entity
-class Stream {
-    -UUID id
-    -String name
-    -String description
-    -List<String> requiredOLSubjects
-    -Map<String, String> minimumOLGrades
-    -List<Course> possibleCourses
-    -List<String> relatedCareers
-    +List<Course> getPossibleCourses()
-    +Map<String, String> getMinimumGrades()
+' ContactInfo aggregation
+class ContactInfo {
+    -Map<String, String> info
+    +void addContact(String type, String value)
+    +void removeContact(String type)
+    +Map<String, String> getInfo()
+    +boolean validateInfo(Map<String, String> info)
 }
 
 ' Course entity
@@ -72,12 +106,33 @@ class Course {
     -String name
     -String description
     -String duration
-    -Map<String, String> minimumALGrades
+    -MinimumGrades minimumGrades
     -Double minimumZScore
     -List<Institution> offeredBy
-    -List<String> relatedCareers
+    -RelatedCareers relatedCareers
     +Double getMinimumZScore()
     +List<Institution> getOfferedBy()
+    +MinimumGrades getMinimumGrades()
+    +RelatedCareers getRelatedCareers()
+    +void addInstitution(Institution institution)
+    +void removeInstitution(Institution institution)
+}
+
+' MinimumGrades aggregation
+class MinimumGrades {
+    -Map<String, String> grades
+    +void addGrade(String subject, String grade)
+    +void removeGrade(String subject)
+    +Map<String, String> getGrades()
+    +boolean validateGrades(Map<String, String> grades)
+}
+
+' RelatedCareers aggregation
+class RelatedCareers {
+    -List<String> careers
+    +void addCareer(String career)
+    +void removeCareer(String career)
+    +List<String> getCareers()
 }
 
 ' Career entity
@@ -86,11 +141,38 @@ class Career {
     -String title
     -String description
     -String category
-    -List<String> requiredSkills
-    -List<String> relatedCourses
-    -Map<String, String> externalLinks
+    -RequiredSkills requiredSkills
+    -RelatedCourses relatedCourses
+    -ExternalLinks externalLinks
     +String getCode()
-    +List<String> getRequiredSkills()
+    +RequiredSkills getRequiredSkills()
+    +RelatedCourses getRelatedCourses()
+    +ExternalLinks getExternalLinks()
+}
+
+' RequiredSkills aggregation
+class RequiredSkills {
+    -List<String> skills
+    +void addSkill(String skill)
+    +void removeSkill(String skill)
+    +List<String> getSkills()
+}
+
+' RelatedCourses aggregation
+class RelatedCourses {
+    -List<String> courses
+    +void addCourse(String course)
+    +void removeCourse(String course)
+    +List<String> getCourses()
+}
+
+' ExternalLinks aggregation
+class ExternalLinks {
+    -Map<String, String> links
+    +void addLink(String name, String url)
+    +void removeLink(String name)
+    +Map<String, String> getLinks()
+    +boolean validateLinks(Map<String, String> links)
 }
 
 ' CareerPrediction value object
@@ -100,41 +182,48 @@ class CareerPrediction <<ValueObject>> {
     -LocalDateTime predictedAt
     +Double getProbability()
     +LocalDateTime getPredictedAt()
-}
-
-' CourseRecommendation entity
-class CourseRecommendation {
-    -UUID id
-    -UUID studentId
-    -UUID courseId
-    -Double matchScore
-    -Map<String, Object> factors
-    -LocalDateTime createdAt
-    +Double getMatchScore()
-    +Map<String, Object> getFactors()
+    +void setCareerPath(String careerPath)
+    +void setProbability(Double probability)
+    +boolean validateProbability(Double probability)
 }
 
 ' StudentResults entity
 class StudentResults {
     -UUID studentId
     -String examType
-    -Map<String, String> results
+    -Results results
     -LocalDateTime examDate
-    +Map<String, String> getResults()
+    +Results getResults()
     +String getExamType()
+}
+
+' Results aggregation
+class Results {
+    -Map<String, String> results
+    +void addResult(String subject, String grade)
+    +void removeResult(String subject)
+    +Map<String, String> getResults()
+    +boolean validateResults(Map<String, String> results)
 }
 
 ' Relationships
 User <|-- Student
 User <|-- Institution
 Student "1" *-- "many" CareerPrediction
+Student "1" *-- "1" StudentProfile
+Student "1" *-- "1" OLResults
+Student "1" *-- "1" ALResults
 Student "1" *-- "many" StudentResults
 Student "many" -- "1" Institution : studies at >
 Institution "many" -- "many" Course : offers >
-Stream "1" -- "many" Course : contains >
+Institution "1" *-- "1" ContactInfo
 Course "many" -- "many" Career : leads to >
-Student "1" -- "many" CourseRecommendation
-Course "1" -- "many" CourseRecommendation
+Course "1" *-- "1" MinimumGrades
+Course "1" *-- "1" RelatedCareers
+Career "1" *-- "1" RequiredSkills
+Career "1" *-- "1" RelatedCourses
+Career "1" *-- "1" ExternalLinks
+StudentResults "1" *-- "1" Results
 
 ' Notes
 note right of User
@@ -150,11 +239,6 @@ end note
 note bottom of Career
   Represents possible career paths
   with required skills and courses
-end note
-
-note bottom of CourseRecommendation
-  Generated recommendations
-  based on student profile
 end note
 
 @enduml
