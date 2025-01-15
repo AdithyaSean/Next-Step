@@ -91,15 +91,6 @@ class Institution {
     +void removeCourse(Course course)
 }
 
-' ContactInfo aggregation
-class ContactInfo {
-    -Map<String, String> info
-    +void addContact(String type, String value)
-    +void removeContact(String type)
-    +Map<String, String> getInfo()
-    +boolean validateInfo(Map<String, String> info)
-}
-
 ' Course entity
 class Course {
     -UUID id
@@ -196,7 +187,8 @@ Student "1" *-- "1" OLResults
 Student "1" *-- "1" ALResults
 Student "many" -- "1" Institution : studies at >
 Institution "many" -- "many" Course : offers >
-Institution "1" *-- "1" ContactInfo
+Student "1" -- "many" Career : interested in >
+Student "1" -- "many" Course : recommended >
 Course "many" -- "many" Career : leads to >
 Course "1" *-- "1" MinimumGrades
 Course "1" *-- "1" RelatedCareers
