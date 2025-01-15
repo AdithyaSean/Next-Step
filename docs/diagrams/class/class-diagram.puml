@@ -1,10 +1,35 @@
 @startuml Next Step Class Diagram
 
-' Style configurations
+' Diagram styling
 skinparam classAttributeIconSize 0
+hide class circle
+hide abstract circle
 skinparam monochrome true
 skinparam shadowing false
-skinparam linetype ortho
+skinparam linetype polyline
+skinparam class {
+    BackgroundColor White
+    BorderColor Black
+    FontSize 14
+    FontStyle Normal
+    FontName Arial
+    
+    AttributeFontSize 12
+    AttributeFontColor Black
+    AttributeFontName Arial
+    AttributeFontStyle Normal
+    
+    StereotypeFontSize 12
+    StereotypeFontColor Black
+    StereotypeFontName Arial
+    StereotypeFontStyle Italic
+    
+    ArrowFontSize 16
+    ArrowFontName Arial
+    ArrowFontStyle Normal
+    BorderThickness 2
+    ArrowThickness 2
+}
 
 ' Base User class
 abstract class User {
@@ -167,7 +192,7 @@ class ExternalLinks {
 }
 
 ' CareerPrediction value object
-class CareerPrediction <<ValueObject>> {
+class CareerPrediction {
     -String careerPath
     -Double probability
     -LocalDateTime predictedAt
@@ -181,35 +206,19 @@ class CareerPrediction <<ValueObject>> {
 ' Relationships
 User <|-- Student
 User <|-- Institution
-Student "1" *-- "many" CareerPrediction
-Student "1" *-- "1" StudentProfile
+Student "1" *-- "✱     " CareerPrediction
+Student "1 " *-- "1" StudentProfile
 Student "1" *-- "1" OLResults
 Student "1" *-- "1" ALResults
-Student "many" -- "1" Institution : studies at >
-Institution "many" -- "many" Course : offers >
-Student "1" -- "many" Career : interested in >
-Student "1" -- "many" Course : recommended >
-Course "many" -- "many" Career : leads to >
-Course "1" *-- "1" MinimumGrades
-Course "1" *-- "1" RelatedCareers
-Career "1" *-- "1" RequiredSkills
+Student "1" -- "    1" Institution : studies at
+Student "1     " -- "✱" Career : ‎ interested in
+Student "1" -- "✱ " Course : recommended
+Institution "1" -- "✱" Course : offers
+Course "1     " -- "✱" Career : leads to
+Course "1" *-- "1    " MinimumGrades
+Course "1 " *-- "1" RelatedCareers
+Career "1     " *-- "1" RequiredSkills
 Career "1" *-- "1" RelatedCourses
-Career "1" *-- "1" ExternalLinks
-
-' Notes
-note right of User
-  Base class for all user types
-  with authentication details
-end note
-
-note right of Student
-  Extends User with academic
-  and personal information
-end note
-
-note bottom of Career
-  Represents possible career paths
-  with required skills and courses
-end note
+Career "1" *-- "1      " ExternalLinks
 
 @enduml
