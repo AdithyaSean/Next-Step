@@ -1,0 +1,57 @@
+@startuml Profile Management Sequence
+
+skinparam ParticipantPadding 20
+skinparam BoxPadding 10
+skinparam SequenceGroupBodyBackgroundColor transparent
+
+actor User
+participant "Frontend" as UI
+participant ProfileController
+participant ValidationService
+participant ProfileService
+participant UserRepository
+participant StorageService
+
+User -> UI: Update profile information
+activate UI
+
+UI -> ProfileController: PUT /profile/update\n(profileData)
+activate ProfileController
+
+ProfileController -> ValidationService: validateProfileData(profileData)
+activate ValidationService
+
+alt invalid input
+    ValidationService --> ProfileController: throw ValidationException
+    ProfileController --> UI: 400 Bad Request
+    UI --> User: Show validation errors
+else valid input
+    ValidationService --> ProfileController: success
+    
+    ProfileController -> ProfileService: updateProfile(profileData)
+    activate ProfileService
+    
+    alt has new avatar
+        ProfileService -> StorageService: uploadFile(avatar)
+        activate StorageService
+        StorageService --> ProfileService: fileUrl
+        deactivate StorageService
+    end
+    
+    ProfileService -> UserRepository: save(updatedProfile)
+    activate UserRepository
+    UserRepository --> ProfileService: savedProfile
+    deactivate UserRepository
+    
+    ProfileService --> ProfileController: profileDTO
+    deactivate ProfileService
+    
+    ProfileController --> UI: 200 OK
+    UI --> User: Profile updated successfully
+end
+
+deactivate ValidationService
+deactivate ProfileController
+deactivate UI
+
+@enduml 

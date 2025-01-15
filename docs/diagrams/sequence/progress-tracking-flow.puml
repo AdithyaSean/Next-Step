@@ -1,0 +1,50 @@
+@startuml Progress Tracking Sequence
+
+skinparam ParticipantPadding 20
+skinparam BoxPadding 10
+skinparam SequenceGroupBodyBackgroundColor transparent
+
+actor Student
+participant "Frontend" as UI
+participant ProgressController
+participant ProgressService
+participant GoalService
+participant AchievementService
+participant AnalyticsService
+
+Student -> UI: View progress dashboard
+activate UI
+
+UI -> ProgressController: GET /progress/dashboard
+activate ProgressController
+
+ProgressController -> ProgressService: getStudentProgress(studentId)
+activate ProgressService
+
+par Academic Goals
+    ProgressService -> GoalService: getAcademicGoals()
+    activate GoalService
+    GoalService --> ProgressService: goals
+    deactivate GoalService
+else Achievements
+    ProgressService -> AchievementService: getAchievements()
+    activate AchievementService
+    AchievementService --> ProgressService: achievements
+    deactivate AchievementService
+else Analytics
+    ProgressService -> AnalyticsService: getProgressAnalytics()
+    activate AnalyticsService
+    AnalyticsService --> ProgressService: analytics
+    deactivate AnalyticsService
+end
+
+ProgressService --> ProgressController: progressData
+deactivate ProgressService
+
+ProgressController --> UI: 200 OK\n{progress, goals, achievements}
+UI --> Student: Display progress dashboard
+
+deactivate ProgressController
+deactivate UI
+
+@enduml 
