@@ -13,7 +13,6 @@ skinparam linetype polyline
 actor "User" as User
 actor "Student" as Student
 actor "Institution" as Institution
-actor "AI Engine" as AI #AliceBlue
 actor "Admin" as Administrator #AliceBlue
 
 ' Inheritance relationships
@@ -49,20 +48,19 @@ package "Next Step System" {
         usecase "Manage Admissions" as ManageAdmissions
     }
 
+    ' AI System package
+    package "AI System" {
+        usecase "Generate Career Predictions" as GeneratePredictions
+        usecase "Analyze Student Data" as AnalyzeData
+        usecase "Process Academic Results" as ProcessResults
+    }
+
     ' Admin Features package
     package "Admin Features" {
         usecase "Manage Users" as ManageUsers
         usecase "Monitor System" as MonitorSystem
         usecase "Manage Career Data" as ManageCareerData
-        usecase "Configure AI Engine" as ConfigureAI
-    }
-
-    ' AI Features package
-    package "AI Features" {
-        usecase "Generate Recommendations" as GenerateRecommendations
-        usecase "Analyze Student Data" as AnalyzeData
-        usecase "Calculate Success Probability" as CalculateProbability
-        usecase "Update Prediction Models" as UpdateModels
+        usecase "Configure AI Parameters" as ConfigureAI
     }
 }
 
@@ -94,16 +92,15 @@ Administrator -left-> MonitorSystem
 Administrator -left-> ManageCareerData
 Administrator -left-> ConfigureAI
 
-AI -left-> GenerateRecommendations
+AI -left-> GeneratePredictions
 AI -left-> AnalyzeData
-AI -left-> CalculateProbability
-AI -left-> UpdateModels
+AI -left-> ProcessResults
 
 ' Dependencies
-ViewRecommendations ..> GenerateRecommendations : includes
-GenerateRecommendations ..> AnalyzeData : includes
-GenerateRecommendations ..> CalculateProbability : includes
-ConfigureAI ..> UpdateModels : includes
+ViewRecommendations ..> GeneratePredictions : includes
+GeneratePredictions ..> AnalyzeData : includes
+GeneratePredictions ..> ProcessResults : includes
+ConfigureAI ..> ProcessResults : includes
 ExploreCourses ..> ViewInstitutions : includes
 ManageAdmissions ..> ViewApplications : includes
 
@@ -112,6 +109,6 @@ note "All users must authenticate\nbefore accessing features" as N1
 Login .. N1
 
 note "AI continuously learns from\nuser interactions and outcomes" as N2
-UpdateModels .. N2
+ProcessResults .. N2
 
 @enduml

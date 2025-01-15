@@ -6,7 +6,7 @@ hide class circle
 hide abstract circle
 skinparam monochrome true
 skinparam shadowing false
-skinparam linetype polyline
+skinparam linetype ortho
 skinparam class {
     BackgroundColor White
     BorderColor Black
@@ -214,6 +214,7 @@ Student "1" -- "    1" Institution : studies at
 Student "1     " -- "✱" Career : ‎ interested in
 Student "1" -- "✱ " Course : recommended
 Institution "1" -- "✱" Course : offers
+Institution "1" -- "✱" Career : relates to
 Course "1     " -- "✱" Career : leads to
 Course "1" *-- "1    " MinimumGrades
 Course "1 " *-- "1" RelatedCareers
