@@ -1,20 +1,17 @@
 # Next Step 🎓
 
-An AI-powered educational and career pathway recommendation system that helps students make informed decisions about their academic and career paths. Built with React frontend and Spring Boot microservices backend.
+An AI-powered educational and career pathway recommendation system that helps students make informed decisions about their academic and career paths. Built with Flutter frontend and Spring Boot microservices backend.
 
 ## 🌟 System Architecture
 
 ### Authentication & Security
 - Firebase Authentication for secure user management
-- JWT token validation across microservices
 - Role-based access control
 - API Gateway for centralized security
 
 ### Service Communication
 - REST APIs for synchronous requests
 - Event-driven architecture for asynchronous operations
-- Service discovery via Spring Cloud Netflix
-- Circuit breakers for fault tolerance
 
 ## 🚀 Microservices
 
@@ -47,9 +44,8 @@ The project follows a microservices architecture with the following components:
    - Course compatibility
    - Success probability calculation
 
-5. **Frontend** (`next-step-frontend`)
-   - React-based UI
-   - Material-UI components
+5. **Frontend** (`next-step-flutter`)
+   - Flutter-based UI
    - Responsive design
    - Progressive Web App
 
@@ -68,10 +64,8 @@ graph TD
 ## 🛠️ Tech Stack
 
 ### Frontend
-- React + Vite
+- Flutter
 - Firebase Authentication
-- React Router
-- Material-UI
 - Progressive Web App
 
 ### Backend
@@ -82,7 +76,6 @@ graph TD
 
 ### DevOps
 - Docker
-- Kubernetes
 
 ## 🚀 Getting Started
 
@@ -137,18 +130,17 @@ graph TD
    ./mvnw spring-boot:run -pl next-step-recommendations
 
    # Start frontend
-   cd next-step-frontend
-   yarn install
-   yarn dev
+   cd next-step-flutter
+   flutter pub get
+   flutter run
    ```
 
 ## 📝 Documentation
 
 Detailed documentation available in `/docs`:
-- [Architecture Overview](docs/architecture.md)
-- [Data Models](docs/data-model.md)
 - [Microservices](docs/microservices.md)
 - [Development Roadmap](docs/roadmap.md)
+- [API Details](docs/api.md)
 
 ## 🤝 Contributing
 

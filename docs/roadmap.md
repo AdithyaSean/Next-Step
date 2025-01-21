@@ -24,30 +24,28 @@
 5. **Deployment**
    - Save the models and data for future use or deployment with microservices architecture
 
-## Phase 2: Frontend Development with React [IN PROGRESS - 20%]
+## Phase 2: Frontend Development with Flutter [IN PROGRESS - 30%]
 
 1. **Basic Setup and Structure** [COMPLETE]
-   - Project initialization with Vite
-   - Basic routing setup
-   - Navigation component
+   - Project initialization with Flutter [COMPLETE]
+   - Basic routing setup [COMPLETE]
+   - Navigation component [COMPLETE]
 
 2. **User Authentication** [IN PROGRESS - 50%]
    - Firebase configuration [COMPLETE]
    - Basic login page [COMPLETE]
-   - User authorization and role management [PENDING]
-   - Profile access control [PENDING]
+   - User authorization and role management [ONGOING]
+   - Profile access control [ONGOING]
 
-3. **Core Features** [PENDING]
-   - Student profile management
-   - Academic results input
-   - Skills and interests input
-   - Recommendation display
+3. **Core Features** [ONGOING]
+   - User information input [ONGOING]
+   - Recommendation display [PENDING]
+   - Institute user functions [PENDING]
 
-4. **API Integration** [PENDING]
-   - User service integration
-   - Student profile service integration
-   - Education data service integration
-   - Recommendation engine integration
+4. **API Integration** [ONGOING]
+   - User Management service integration [ONGOING]
+   - Recommendation engine integration [ONGOING]
+   - Education data service integration [PENDING]
 
 5. **UI/UX Enhancement** [PENDING]
    - Responsive design implementation
@@ -55,7 +53,7 @@
    - Form validation
    - User feedback mechanisms
 
-## Phase 3: Backend Development with Spring Boot [PLANNED]
+## Phase 3: Backend Development with Spring Boot [ONGOING]
 
 1. **Microservices Setup**
    - Service architecture planning [COMPLETE]
@@ -71,7 +69,6 @@
    - Cross-service data consistency
 
 3. **API Development**
-   - RESTful endpoints design
-   - Authentication middleware
+   - RESTful endpoints design [ONGOING]
    - Data validation
    - Error handling
