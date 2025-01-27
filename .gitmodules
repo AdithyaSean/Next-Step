@@ -20,7 +20,7 @@
 
 [submodule "next-step-frontend"]
     path = next-step-frontend
-    url = https://github.com/AdithyaSean/next-step-frontend.git
+    url = https://github.com/AdithyaSean/next-step-react.git
 
 [submodule "next-step-education"]
 	path = next-step-education
