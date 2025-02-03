@@ -18,8 +18,8 @@
     path = next-step-gateway
     url = https://github.com/AdithyaSean/next-step-gateway.git
 
-[submodule "next-step-frontend"]
-    path = next-step-frontend
+[submodule "next-step-react"]
+    path = next-step-react
     url = https://github.com/AdithyaSean/next-step-react.git
 
 [submodule "next-step-education"]
