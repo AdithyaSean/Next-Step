@@ -141,6 +141,7 @@ Detailed documentation available in `/docs`:
 - [Microservices](docs/microservices.md)
 - [Development Roadmap](docs/roadmap.md)
 - [API Details](docs/api.md)
+- [Interfaces](interfaces/)
 
 ## 🤝 Contributing
 
